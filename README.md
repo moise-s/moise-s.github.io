@@ -1,73 +1,63 @@
-# Welcome to your Lovable project
+# Moisés — portfolio & project hub
 
-## Project info
+A dark-first portfolio focused on practical backend, data and automation projects.
+Built with React, TypeScript and Vite. All project descriptions and links are curated
+locally: there are no GitHub API calls, tokens, trackers or contact-form backend.
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+## Local development
 
-## How can I edit this code?
-
-There are several ways of editing your application.
-
-**Use Lovable**
-
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
-
-Changes made via Lovable will be committed automatically to this repo.
-
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
+Use Node.js 22.12 or newer (Node.js 24 LTS recommended).
 
 ```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+npm ci
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+Open `http://127.0.0.1:4173`. For the production preview:
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+```sh
+npm run build
+npm run preview
+```
 
-**Use GitHub Codespaces**
+## Checks
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+```sh
+npm run typecheck
+npm run lint
+npm test
+npm run build
+```
 
-## What technologies are used for this project?
+## Add or update a project
 
-This project is built with:
+Edit `src/data/projects.ts`. Each entry has a stable `id`, plain-language copy,
+category, stack, verified source URL and detail-page sections. `featured: true`
+adds a large card with an illustrative visual. For new illustration types, extend
+`src/components/ProjectVisual.tsx` and its `Project` union.
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+When a public app or landing page exists, add `website: 'https://…'` to its entry.
+The website action then appears on the catalog card and project homepage. Leave
+it absent until the URL is real. A source repository is not presented as a live demo.
 
-## How can I deploy this project?
+The workbench section in `src/pages/Index.tsx` holds project stories whose portfolio
+pages are still in preparation. Move an entry to the catalog when it is ready.
+Do not add private service addresses, household data or sensitive screenshots.
 
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
+## Navigation & static hosting
 
-## Can I connect a custom domain to my Lovable project?
+The root domain is configured for `https://moise-s.github.io/`. Project URLs use
+hash routing, e.g. `https://moise-s.github.io/#/projects/price-tracker`, so direct
+visits and refreshes work on GitHub Pages without rewrite rules. Search and
+category choices live in the hash query string and survive project navigation.
+Social metadata describes the portfolio as a whole; hash detail pages do not have
+independent server-rendered social cards.
 
-Yes, you can!
+`npm run build` creates `dist/`. Publishing is a separate owner-authorized action.
+No deployment workflow was added or executed as part of this local remake.
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+## Design
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+See `docs/design-brief.md` for the complete implementation prompt, research-backed
+inventory, UX plan and acceptance criteria. Fonts are self-hosted through Fontsource.
+The product diagrams are illustrative, not screenshots or real operational data.

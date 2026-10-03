@@ -1,90 +1,74 @@
-import { useState, useEffect } from 'react';
-import { Menu, X } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-
-const navItems = [
-  { label: 'About', href: '#about' },
-  { label: 'Projects', href: '#projects' },
-  { label: 'Blog', href: '#blog' },
-  { label: 'Contact', href: '#contact' },
-];
-
-export const Header = () => {
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
+import { ArrowUpRight, Github } from "lucide-react";
+import { Link } from "react-router-dom";
+export function Header() {
   return (
-    <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled
-          ? 'bg-background/80 backdrop-blur-lg border-b border-border shadow-soft'
-          : 'bg-transparent'
-      }`}
-    >
-      <nav className="container mx-auto px-6 py-4">
-        <div className="flex items-center justify-between">
+    <>
+      <a
+        className="skip-link"
+        href="#main"
+        onClick={(event) => {
+          event.preventDefault();
+          const main = document.getElementById("main");
+          main?.scrollIntoView({ block: "start" });
+          main?.focus({ preventScroll: true });
+        }}
+      >
+        Skip to content
+      </a>
+      <header className="site-header">
+        <div className="container header-inner">
+          <Link className="wordmark" to="/" aria-label="Moisés, home">
+            <span className="monogram">
+              m<span>.</span>
+            </span>
+            <span>
+              moisés<span className="wordmark-dot">.</span>
+            </span>
+          </Link>
+          <nav aria-label="Main navigation">
+            <Link
+              to="/?section=projects"
+              onClick={() =>
+                document
+                  .getElementById("projects")
+                  ?.scrollIntoView({ block: "start" })
+              }
+            >
+              Projects
+            </Link>
+            <Link
+              to="/?section=about"
+              onClick={() =>
+                document
+                  .getElementById("about")
+                  ?.scrollIntoView({ block: "start" })
+              }
+            >
+              About
+            </Link>
+            <Link
+              to="/?section=contact"
+              onClick={() =>
+                document
+                  .getElementById("contact")
+                  ?.scrollIntoView({ block: "start" })
+              }
+            >
+              Contact
+            </Link>
+          </nav>
           <a
-            href="#"
-            className="font-heading text-xl font-bold text-foreground hover:text-primary transition-colors"
+            className="header-github"
+            href="https://github.com/moise-s"
+            target="_blank"
+            rel="noopener noreferrer"
           >
-            moisés<span className="text-primary">.</span>
+            <Github size={16} />
+            <span>GitHub</span>
+            <ArrowUpRight size={14} />
           </a>
-
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-8">
-            {navItems.map((item) => (
-              <a
-                key={item.label}
-                href={item.href}
-                className="text-muted-foreground hover:text-foreground transition-colors duration-200 text-sm font-medium"
-              >
-                {item.label}
-              </a>
-            ))}
-            <Button variant="hero" size="sm" asChild>
-              <a href="#contact">Get in touch</a>
-            </Button>
-          </div>
-
-          {/* Mobile Menu Button */}
-          <button
-            className="md:hidden text-foreground p-2"
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            aria-label="Toggle menu"
-          >
-            {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
         </div>
-
-        {/* Mobile Navigation */}
-        {isMobileMenuOpen && (
-          <div className="md:hidden absolute top-full left-0 right-0 bg-background/95 backdrop-blur-lg border-b border-border animate-fade-in">
-            <div className="container mx-auto px-6 py-4 flex flex-col gap-4">
-              {navItems.map((item) => (
-                <a
-                  key={item.label}
-                  href={item.href}
-                  className="text-muted-foreground hover:text-foreground transition-colors py-2 text-lg"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  {item.label}
-                </a>
-              ))}
-              <Button variant="hero" size="lg" className="mt-2" asChild>
-                <a href="#contact">Get in touch</a>
-              </Button>
-            </div>
-          </div>
-        )}
-      </nav>
-    </header>
+      </header>
+    </>
   );
-};
+}
